@@ -15,8 +15,7 @@ find_package(
   nodelet
 )
 
-# Use C++11
-set(CMAKE_CXX_FLAGS "--std=c++11 ${CMAKE_CXX_FLAGS}")
+set(CMAKE_CXX_FLAGS "-std=c++17 -fno-diagnostics-color")
 
 ## pkg-config libraries
 find_package(PkgConfig REQUIRED)
