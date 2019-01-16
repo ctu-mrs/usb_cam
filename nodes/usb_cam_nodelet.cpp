@@ -73,6 +73,12 @@ namespace usb_cam
         return;
       }
 
+      if (start_from_beginning_) {
+        std_srvs::SetBool msg_bool;
+        msg_bool.request.data = true;
+        service_toggle_cap(msg_bool.request, msg_bool.response);
+      }
+
       service_toggle_capture_ = nh.advertiseService("toggle_capture", &UsbCamNodelet::service_toggle_cap, this);
     }
 
@@ -102,6 +108,7 @@ namespace usb_cam
             cam_.start_capturing();
             publisher_thread_ = std::thread(&UsbCamNodelet::spin, this);
             res.success       = true;
+            NODELET_INFO("Running camera stream");
           }
           catch (const std::system_error& e) {
             NODELET_ERROR("Couldn't start image publisher thread - %s", e.code().message().c_str());
@@ -186,6 +193,7 @@ namespace usb_cam
       nh.param("camera_frame_id", img_->header.frame_id, DEFAULT_CAMERA_NAME);
       nh.param("camera_name", camera_name_, DEFAULT_CAMERA_NAME);
       nh.param("camera_info_url", camera_info_url_, std::string());
+      nh.param("start_from_beginning", start_from_beginning_, true);
     }
 
     void recalibrate_camera_info_() {
@@ -274,6 +282,8 @@ namespace usb_cam
     bool autofocus_;
     bool autoexposure_;
     bool auto_white_balance_;
+
+    bool start_from_beginning_;
 
     UsbCam::io_method    io_method_;
     UsbCam::pixel_format pixel_format_;
