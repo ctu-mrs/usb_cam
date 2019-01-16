@@ -4,7 +4,16 @@ project(usb_cam)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS image_transport roscpp std_msgs std_srvs sensor_msgs camera_info_manager nodelet)
+find_package(
+  catkin REQUIRED COMPONENTS 
+  image_transport 
+  roscpp 
+  std_msgs 
+  std_srvs 
+  sensor_msgs 
+  camera_info_manager 
+  nodelet
+)
 
 # Use C++11
 set(CMAKE_CXX_FLAGS "--std=c++11 ${CMAKE_CXX_FLAGS}")
