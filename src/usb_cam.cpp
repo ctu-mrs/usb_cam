@@ -304,7 +304,7 @@ namespace usb_cam
     return 1;
   }
 
-  void UsbCam::mjpeg2rgb(char *MJPEG, int len, char *RGB, int NumPixels) {
+  void UsbCam::mjpeg2rgb(char *MJPEG, int len, char *RGB, [[maybe_unused]] int NumPixels) {
     int got_picture;
 
     memset(RGB, 0, avframe_rgb_size_);
