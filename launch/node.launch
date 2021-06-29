@@ -20,6 +20,15 @@
 
     <param name="io_method" value="mmap"/>
 
+    <!-- Params for mjpeg quality -->
+    <param name="image_raw/compressed/jpeg_quality" value="60" />
+
+    <!-- Params for theora quality, images being compressed into "stream" -->
+    <param name="image_raw/theora/keyframe_frequency" value="60" />
+    <param name="image_raw/theora/target_bitrate" value="5000" />
+    <param name="image_raw/theora/quality" value="5" />
+    <param name="image_raw/theora/optimize_for" value="0" />
+
   </node>
 
 </launch>
