@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.1.2)
 project(usb_cam)
 
 ## Find catkin macros and libraries
@@ -14,8 +14,6 @@ find_package(
   camera_info_manager 
   nodelet
 )
-
-set(CMAKE_CXX_FLAGS "-std=c++17 -fno-diagnostics-color -Wno-deprecated-declarations")
 
 ## pkg-config libraries
 find_package(PkgConfig REQUIRED)
