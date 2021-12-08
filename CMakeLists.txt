@@ -15,6 +15,9 @@ find_package(
   nodelet
 )
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 ## pkg-config libraries
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(avcodec libavcodec REQUIRED)
