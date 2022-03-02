@@ -5,15 +5,15 @@ project(usb_cam)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(
-  catkin REQUIRED COMPONENTS 
-  image_transport 
-  roscpp 
-  std_msgs 
-  std_srvs 
-  sensor_msgs 
-  camera_info_manager 
+  catkin REQUIRED COMPONENTS
+  image_transport
+  roscpp
+  std_msgs
+  std_srvs
+  sensor_msgs
+  camera_info_manager
   nodelet
-)
+  )
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -27,72 +27,75 @@ pkg_check_modules(swscale libswscale REQUIRED)
 ## Declare things to be passed to other projects ##
 ###################################################
 
-## LIBRARIES: libraries you create in this project that dependent projects also need
-## CATKIN_DEPENDS: catkin_packages dependent projects also need
-## DEPENDS: system dependencies of this project that dependent projects also need
+set(LIBRARIES
+  usb_cam
+  usb_cam_nodelet
+  )
+
+set(EXECUTABLES
+  usb_cam_node
+  )
+
 catkin_package(
   INCLUDE_DIRS include
-  LIBRARIES ${PROJECT_NAME}
-)
+  LIBRARIES ${LIBRARIES}
+  )
 
-###########
-## Build ##
-###########
+## --------------------------------------------------------------
+## |                            Build                           |
+## --------------------------------------------------------------
 
 include_directories(include
   ${catkin_INCLUDE_DIRS}
   ${avcodec_INCLUDE_DIRS}
   ${swscale_INCLUDE_DIRS}
-)
+  )
 
 ## Build the USB camera library
-add_library(${PROJECT_NAME} src/usb_cam.cpp)
-target_link_libraries(${PROJECT_NAME}
+add_library(usb_cam src/usb_cam.cpp)
+target_link_libraries(usb_cam
   ${avcodec_LIBRARIES}
   ${swscale_LIBRARIES}
   ${catkin_LIBRARIES}
-)
+  )
 
 ## Build USB camera nodelet library
-add_library(${PROJECT_NAME}_nodelet nodes/usb_cam_nodelet.cpp)
-target_link_libraries(${PROJECT_NAME}_nodelet
-  ${PROJECT_NAME}
+add_library(usb_cam_nodelet nodes/usb_cam_nodelet.cpp)
+target_link_libraries(usb_cam_nodelet
+  usb_cam
   ${avcodec_LIBRARIES}
   ${swscale_LIBRARIES}
   ${catkin_LIBRARIES}
-)
+  )
 
 ## Declare a cpp executable
-add_executable(${PROJECT_NAME}_node nodes/usb_cam_node.cpp)
-target_link_libraries(${PROJECT_NAME}_node
-  ${PROJECT_NAME}
+add_executable(usb_cam_node nodes/usb_cam_node.cpp)
+target_link_libraries(usb_cam_node
+  usb_cam
   ${avcodec_LIBRARIES}
   ${swscale_LIBRARIES}
   ${catkin_LIBRARIES}
-)
+  )
 
-#############
-## Install ##
-#############
+## --------------------------------------------------------------
+## |                           Install                          |
+## --------------------------------------------------------------
 
-## Mark executables and/or libraries for installation
-install(TARGETS ${PROJECT_NAME}_node ${PROJECT_NAME} ${PROJECT_NAME}_nodelet
-  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+install(TARGETS ${LIBRARIES}
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-)
+  RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}
+  )
 
-# Copy xml files
-install(FILES package.xml nodelet_plugins.xml
-    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-)
+install(TARGETS ${EXECUTABLES}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+  )
 
-## Copy launch files
-install(DIRECTORY launch/
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/launch
-  FILES_MATCHING PATTERN "*.launch"
-)
+install(DIRECTORY launch
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+  )
 
-install(DIRECTORY include/${PROJECT_NAME}/
-   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-   FILES_MATCHING PATTERN "*.h" PATTERN "*.hpp"
-)
+install(DIRECTORY ./
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+  FILES_MATCHING PATTERN "*.xml"
+  )
