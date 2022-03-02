@@ -1,6 +1,6 @@
 <launch>
 
-  <arg name="video_device" default="/dev/video0" />
+  <arg name="video_device" default="/dev/arducam0" />
   <arg name="image_width" default="1600" />
   <arg name="image_height" default="1200" />
   <arg name="camera_frame_id" default="usb_cam" />
@@ -10,7 +10,7 @@
 
   <node name="$(arg camera_name)" pkg="usb_cam" type="usb_cam_node" output="screen" respawn="true">
 
-    <param name="reset_camera" command="usbreset 'USB 2.0 Camera'" />
+    <param name="reset_camera" command="sudo usbreset 'USB 2.0 Camera'" />
 
     <param name="video_device" value="$(arg video_device)" />
     <param name="image_width" value="$(arg image_width)" />
