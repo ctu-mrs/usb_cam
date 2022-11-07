@@ -79,6 +79,7 @@ namespace usb_cam
       PIXEL_FORMAT_RGB24,
       PIXEL_FORMAT_BGR24,
       PIXEL_FORMAT_GREY,
+      PIXEL_FORMAT_MONO16,
       PIXEL_FORMAT_UNKNOWN
     } pixel_format;
 
