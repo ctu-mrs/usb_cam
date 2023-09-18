@@ -1,0 +1,38 @@
+<launch>
+
+  <arg name="video_device" default="/dev/video4" />
+  <!-- <arg name="image_width" default="320" /> -->
+  <!-- <arg name="image_height" default="256" /> -->
+  <arg name="image_width" default="640" />
+  <arg name="image_height" default="512" />
+  <arg name="camera_frame_id" default="flir_boson" />
+  <arg name="camera_name" default="flir_boson" />
+  <arg name="pixel_format" default="grey" />
+  <arg name="camera_info_url" default="" />
+  <arg name="framerate" default="60" />
+
+  <node name="$(arg camera_name)" pkg="usb_cam" type="usb_cam_node" output="screen" respawn="true">
+
+    <param name="video_device" value="$(arg video_device)" />
+    <param name="image_width" value="$(arg image_width)" />
+    <param name="image_height" value="$(arg image_height)" />
+    <param name="camera_frame_id" value="$(arg camera_frame_id)" />
+    <param name="camera_name" value="$(arg camera_name)" />
+    <param name="camera_info_url" value="$(arg camera_info_url)" />
+    <param name="pixel_format" value="$(arg pixel_format)" />
+    <param name="framerate" value="$(arg framerate)" />
+
+    <param name="io_method" value="mmap"/>
+
+    <!-- Params for mjpeg quality -->
+    <param name="image_raw/compressed/jpeg_quality" value="60" />
+
+    <!-- Params for theora quality, images being compressed into "stream" -->
+    <param name="image_raw/theora/keyframe_frequency" value="60" />
+    <param name="image_raw/theora/target_bitrate" value="5000" />
+    <param name="image_raw/theora/quality" value="5" />
+    <param name="image_raw/theora/optimize_for" value="0" />
+
+  </node>
+
+</launch>
