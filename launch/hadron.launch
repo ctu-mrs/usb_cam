@@ -1,6 +1,6 @@
 <launch>
 
-  <arg name="video_device" default="/dev/video4" />
+  <arg name="video_device" default="/dev/video0" />
   <!-- <arg name="image_width" default="320" /> -->
   <!-- <arg name="image_height" default="256" /> -->
   <arg name="image_width" default="640" />
